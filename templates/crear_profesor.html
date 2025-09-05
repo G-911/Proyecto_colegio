@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Profesor</title>
+</head>
+<body>
+    <h2>Crear nuevo profesor</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Crear Profesor</button>
+    </form>
+    <p><a href="{% url 'lista_usuarios' %}">Volver a la lista de usuarios</a></p>
+</body>
+</html>
