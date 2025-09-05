@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Comunicados</h2>
+    <ul>
+    {% for comunicado in comunicados %}
+        <li>
+        <strong>{{ comunicado.titulo }}</strong> – {{ comunicado.fecha }}
+        <p>{{ comunicado.descripcion }}</p>
+        </li>
+    {% empty %}
+        <li>No hay comunicados disponibles.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

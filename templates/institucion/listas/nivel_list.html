@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Niveles Educativos</h2>
+<ul>
+  {% for nivel in object_list %}
+    <li>{{ nivel.nombre }} – {{ nivel.descripcion }}</li>
+  {% empty %}
+    <li>No hay niveles registrados.</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'nivel_create' %}" class="btn btn-primary">Agregar Nivel</a>
+{% endblock %}

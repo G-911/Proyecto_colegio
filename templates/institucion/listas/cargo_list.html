@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Cargos Directivos</h2>
+    <ul>
+    {% for cargo in object_list %}
+        <li>{{ cargo.nombre }} – {{ cargo.descripcion }}</li>
+    {% empty %}
+        <li>No hay cargos registrados.</li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'cargo_create' %}" class="btn btn-primary">Agregar Cargo</a>
+{% endblock %}
