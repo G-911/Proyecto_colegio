@@ -2,12 +2,13 @@ from django.views.generic import TemplateView ,DetailView, ListView, CreateView
 from .models import Colegio, Comunicado, CargoDirectivo, PersonalDirectivo, NivelEducativo
 from .forms import CargoDirectivoForm, PersonalDirectivoForm, NivelEducativoForm
 from django.urls import reverse_lazy
+from .mixins import SoloAdminMixin, SoloLecturaMixin, SoloProfesorOMasMixin
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
 
 
-class ColegioView(DetailView):
+class ColegioView(DetailView, SoloLecturaMixin):
     model = Colegio
     template_name = 'institucion/colegio.html'
 
@@ -19,12 +20,12 @@ class ListaComunicadosView(ListView):
 
 
 # Cargo Directivo
-class CargoDirectivoListView(ListView):
+class CargoDirectivoListView(ListView, SoloProfesorOMasMixin):
     model = CargoDirectivo
-    template_name = 'institucion/cargo_list.html'
+    template_name = 'institucion/listas/cargo_list.html'
 
 
-class CargoDirectivoCreateView(CreateView):
+class CargoDirectivoCreateView(CreateView, SoloAdminMixin):
     model = CargoDirectivo
     form_class = CargoDirectivoForm
     template_name = 'institucion/cargo_form.html'
@@ -34,7 +35,7 @@ class CargoDirectivoCreateView(CreateView):
 # Personal Directivo
 class PersonalDirectivoListView(ListView):
     model = PersonalDirectivo
-    template_name = 'institucion/directivo_list.html'
+    template_name = 'institucion/listas/directivo_list.html'
 
 
 class PersonalDirectivoCreateView(CreateView):
@@ -47,7 +48,7 @@ class PersonalDirectivoCreateView(CreateView):
 # Nivel Educativo
 class NivelEducativoListView(ListView):
     model = NivelEducativo
-    template_name = 'institucion/nivel_list.html'
+    template_name = 'institucion/listas/nivel_list.html'
 
 class NivelEducativoCreateView(CreateView):
     model = NivelEducativo

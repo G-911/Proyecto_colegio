@@ -54,7 +54,6 @@ class CrearProfesorView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
 
 
-
 class ListaUsuariosView(LoginRequiredMixin, ListView):
     model = Usuario
     template_name = 'lista_usuarios.html'
@@ -89,3 +88,4 @@ class CrearAdminView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         usuario.groups.add(grupo)
 
         return super().form_valid(form)
+    

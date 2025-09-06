@@ -1,0 +1,22 @@
+<div class="sidebar">
+    <h3>Menú principal</h3>
+    <ul>
+        <li><a href="{% url 'home' %}">🏠 Inicio</a></li>
+
+        {% if user.is_authenticated %}
+            {% if user.rol == 'admin' %}
+                <li><a href="{% url 'crear_admin' %}">👑 Crear Admin</a></li>
+                <li><a href="{% url 'crear_profesor' %}">👨‍🏫 Crear Profesor</a></li>
+                <li><a href="{% url 'lista_usuarios' %}">📋 Lista de Usuarios</a></li>
+            {% elif user.rol == 'profesor' %}
+                <li><a href="{% url 'lista_usuarios' %}?rol=alumno">👨‍🎓 Ver Alumnos</a></li>
+            {% elif user.rol == 'alumno' %}
+                <li><a href="{% url 'perfil_alumno' %}">📄 Mi Perfil</a></li>
+            {% endif %}
+            <li><a href="{% url 'logout' %}">🔓 Cerrar sesión</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">🔐 Iniciar sesión</a></li>
+            <li><a href="{% url 'signup' %}">📝 Registrarse</a></li>
+        {% endif %}
+    </ul>
+</div>
