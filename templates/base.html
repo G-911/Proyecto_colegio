@@ -5,35 +5,99 @@
     <title>{% block title %}Sistema Escolar{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+        <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 240px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+        }
+        .sidebar h3 {
+            margin-top: 0;
+            font-size: 1.2em;
+            border-bottom: 1px solid #7f8c8d;
+            padding-bottom: 10px;
+        }
+        .sidebar a {
+            display: block;
+            color: #ecf0f1;
+            text-decoration: none;
+            margin: 10px 0;
+        }
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background-color: #fff;
+        }
+        .alert {
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .alert-success { background-color: #d4edda; color: #155724; }
+        .alert-error { background-color: #f8d7da; color: #721c24; }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #ecf0f1;
+            font-size: 0.9em;
+        }
+    </style>
+
 </head>
 <body>
-    <header>
-        <h1>Sistema Escolar</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'home' %}">🏠 Inicio</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'logout' %}">🔓 Cerrar sesión</a></li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">🔐 Iniciar sesión</a></li>
-                    <li><a href="{% url 'signup' %}">📝 Registrarse</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </header>
+    {% include 'partials/sidebar_alumno.html' %}
+    {% include 'partials/sidebar_profesor.html' %}
+    {% include 'partials/sidebar_admin.html' %}
+    {% include 'partials/sidebar_publico.html' %}
 
     <div class="container">
-        {% include 'partials/sidebar.html' %}
-        
-        <main class="main-content">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            {% if user.is_authenticated %}
+                {% if user.rol == 'alumno' %}
+                    {% include 'partials/sidebar_alumno.html' %}
+                {% elif user.rol == 'profesor' %}
+                    {% include 'partials/sidebar_profesor.html' %}
+                {% elif user.rol == 'admin' or user.is_superuser %}
+                    {% include 'partials/sidebar_admin.html' %}
+                {% endif %}
+            {% else %}
+                {% include 'partials/sidebar_publico.html' %}
+            {% endif %}
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
             {% block content %}
-            <!-- Aquí se renderiza el contenido específico de cada vista -->
             {% endblock %}
-        </main>
+        </div>
     </div>
 
     <footer>
-        <p>&copy; 2025 - Sistema Escolar | Desarrollado con Django</p>
+        &copy; 2025 - Sistema Escolar | Desarrollado con Django
     </footer>
 </body>
+
 </html>

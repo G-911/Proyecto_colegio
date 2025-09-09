@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Panel Administrativo</h2>
+  <p>Gestión completa del sistema.</p>
+  <ul>
+    <li><a href="{% url 'admin:auth_user_changelist' %}">Usuarios</a></li>
+    <li><a href="{% url 'admin:index' %}">Ir al panel de Django Admin</a></li>
+  </ul>
+{% endblock %}
